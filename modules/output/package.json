@@ -1,0 +1,6 @@
+{
+    "name" : "output",
+    "main" : "./output.js",
+    "version": "0.0.1",
+    "description": "output module"
+}
