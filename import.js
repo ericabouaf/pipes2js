@@ -111,6 +111,14 @@ fetchPipe(pipeId, function (pipe) {
 
             deciderCode.push("}");
 
+
+            // TODO
+            /*if (m.inputWires.length > 1) {
+                deciderCode.push("if ( (scheduled('sw-61') && !completed('sw-61')) || (scheduled('sw-228') && !completed('sw-228')) || (scheduled('sw-232') && !completed('sw-232')) ) {");
+                deciderCode.push("    waiting_for('sw-61', 'sw-228', 'sw-232');"); // TODO: fix in aws-swf, if decisions, dont override this.decisions = [];
+                deciderCode.push("}");
+            }*/
+
         }
     });
 
