@@ -1,0 +1,8 @@
+{
+    "name" : "aws-swf-pipes-import",
+    "version": "0.0.1",
+    "description": "Import a Yahoo! Pipes into the aws-swf format",
+    "dependencies": {
+        "request": "2.11.4"
+    }
+}

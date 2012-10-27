@@ -1,0 +1,6 @@
+{
+    "name" : "strconcat",
+    "main" : "./strconcat.js",
+    "version": "0.0.1",
+    "description": "strconcat module"
+}

@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "description": "Fetch module",
     "dependencies": {
-        "xml2js-expat": "0.2.2"
+        "xml2js-expat": "0.2.2",
+        "request": "2.11.4"
     }
 }

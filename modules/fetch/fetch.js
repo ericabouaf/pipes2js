@@ -18,6 +18,8 @@ exports.worker = function (task, config) {
     var input = JSON.parse(task.config.input),
         url = valueFor(input.URL, input);
 
+        // TODO: fetch must be able to get multiple URLs !!!!
+
     console.log(url);
 
     request(url, function (error, response, body) {
@@ -38,18 +40,21 @@ exports.worker = function (task, config) {
                 }
 
                 // Parsing XML
-                if (contentType === "text/xml") {
+                var feed_content_types = ["text/xml", "application/rss+xml"];
+                if (feed_content_types.indexOf(contentType) !== -1) {
                     var parser = new xml2js.Parser();
                     parser.addListener('end', function (r) {
 
                         var result = r.channel.item;
 
                         // TODO: beurk
-                        if (JSON.stringify(result).length > 32768) {
+                        /*if (JSON.stringify(result).length > 32768) {
                             result = result.slice(0, 3);
-                        }
+                        }*/
 
-                        task.respondCompleted(result);
+                        task.respondCompleted({
+                            _OUTPUT: result
+                        });
                     });
                     parser.parseString(body);
                     return;

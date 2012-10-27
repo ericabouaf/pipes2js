@@ -1,4 +1,3 @@
-var querystring = require('querystring');
 
 var valueFor = function (val, input) {
     var value;
@@ -13,17 +12,14 @@ var valueFor = function (val, input) {
 exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input),
-        url = valueFor(input.BASE, input) + '/' + valueFor(input.PATH, input),
-        q = {};
+        t = "";
 
-    input.PARAM.forEach(function (p) {
-        q[p.key.value] = valueFor(p.value, input);
+    input.part.forEach(function (p) {
+        t += valueFor(p, input);
     });
 
-    url += '?' + querystring.stringify(q);
-
     task.respondCompleted({
-        _OUTPUT: url
+        _OUTPUT: t
     });
 
 };
