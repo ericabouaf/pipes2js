@@ -1,0 +1,6 @@
+{
+    "name" : "textinput",
+    "main" : "./textinput.js",
+    "version": "0.0.1",
+    "description": "textinput module"
+}

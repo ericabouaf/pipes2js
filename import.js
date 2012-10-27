@@ -53,6 +53,7 @@ fetchPipe(pipeId, function (pipe) {
 
     var deciderCode = [];
 
+    deciderCode.push("/*globals just_started,schedule,scheduled,completed,workflow_input,stop,results,waiting_for */");
 
     // Modules to run whren just_started = modules with no input wire
     deciderCode.push("if (just_started) {");
@@ -64,7 +65,7 @@ fetchPipe(pipeId, function (pipe) {
                 input: m.conf
             };
 
-            deciderCode.push("    schedule(" + JSON.stringify(m.id) + ", " + JSON.stringify(params, null, 8) + ");");
+            deciderCode.push("    schedule(" + JSON.stringify(m.id) + ", " + JSON.stringify(params, null, 4).replace(/\n/g, '\n    ') + ");");
         }
     });
     deciderCode.push("}");
@@ -75,7 +76,7 @@ fetchPipe(pipeId, function (pipe) {
     modules.filter(function (m) {
         if (m.inputWires.length > 0) {
 
-            var conditionLine = "if ( !scheduled(" + JSON.stringify(m.id) + ")";
+            var conditionLine = "if (!scheduled(" + JSON.stringify(m.id) + ")";
 
             // For each incoming module :
             var incomingValues = {};
@@ -95,14 +96,14 @@ fetchPipe(pipeId, function (pipe) {
                 input: m.conf
             };
 
-            deciderCode.push("    var params = " + JSON.stringify(params, null, 3));
+            deciderCode.push("    var params = " + JSON.stringify(params, null, 4).replace(/\n/g, '\n    ') + ";");
 
             // Add the incomingValues
             var k;
             for (k in incomingValues) {
                 if (incomingValues.hasOwnProperty(k)) {
                     var src = incomingValues[k];
-                    deciderCode.push("    params[" + JSON.stringify(k) + "] = results(" + JSON.stringify(src.moduleid) + ")." + src.id + ";");
+                    deciderCode.push("    params.input[" + JSON.stringify(k) + "] = results(" + JSON.stringify(src.moduleid) + ")." + src.id + ";");
                 }
             }
 
