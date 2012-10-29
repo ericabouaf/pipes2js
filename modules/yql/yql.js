@@ -4,7 +4,10 @@ var request = require('request'),
 
 var valueFor = function (val, input) {
     var value;
-    if (val.hasOwnProperty("value")) {
+    if(typeof val === "string") {
+        value = val;
+    }
+    else if (val.hasOwnProperty("value")) {
         value = val.value;
     } else if (val.hasOwnProperty("terminal")) {
         value = input[val.terminal];
@@ -17,16 +20,15 @@ exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input);
 
-        // TODO: fetch must be able to get multiple URLs !!!!
-
     var q = {
         q: valueFor(input.yqlquery, input),
         format: "json",
         diagnostics: (input.raw.value === "results") ? "false" : "true",
-        callback: ""
+        callback: "",
+        env: valueFor(input.envURL, input)
     };
 
-    var url = "http://query.yahooapis.com/v1/public/yql?"+querystring.stringify(q);;
+    var url = "http://query.yahooapis.com/v1/public/yql?"+querystring.stringify(q);
     
     console.log(url);
 

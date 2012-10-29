@@ -1,0 +1,9 @@
+{
+    "name" : "loop",
+    "main" : "./loop.js",
+    "version": "0.0.1",
+    "description": "loop module",
+    "dependencies": {
+        "async": "0.1.22"
+    }
+}

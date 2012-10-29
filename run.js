@@ -60,19 +60,16 @@ Task.prototype = {
 };
 
 
-var run = function(state, deciderCode) {
+var run = function(state, deciderCode, cb) {
 
     var decisions = decide(deciderCode, state);
 
-    if (!decisions) { 
-        console.log(JSON.stringify(state, null, 3));
-        return;
-    }
+    if (!decisions) { return; }
 
     var respondCompleted = function(id, result) {
         state[id].state = 'completed';
         state[id].results = result;
-        run(state, deciderCode);
+        run(state, deciderCode, cb);
     };
 
     for(var i = 0 ; i < decisions.length ; i++) {
@@ -93,6 +90,10 @@ var run = function(state, deciderCode) {
         var worker = require(path.join(process.cwd(), 'modules', activityType)).worker;
         console.log("Running " + decision.id + " (" + activityType + ")")
         worker(task);
+
+        if(decision.id === "_OUTPUT") {
+            cb(null, state["_OUTPUT"].results._OUTPUT, state);
+        }
     }
 
 };
@@ -101,5 +102,8 @@ var run = function(state, deciderCode) {
 var pipe = process.argv[2];
 console.log("Running pipe: " + pipe);
 var deciderCode = fs.readFileSync(path.join(process.cwd(), 'pipes', pipe, pipe + '.js'), 'utf8');
-run({}, deciderCode);
+run({}, deciderCode, function (err, results, state) {
+    console.log(JSON.stringify(results, null, 3));
+    //console.log(JSON.stringify(state));
+});
 

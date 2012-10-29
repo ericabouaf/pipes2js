@@ -24,13 +24,15 @@ var fetchPipe = function (pipeId, cb) {
 
 fetchPipe(pipeId, function (pipe) {
 
+    //console.log(JSON.stringify(pipe, null, 3));
 
     /**
      * Build a structure representing the modules (activities) and input and output wires
      */
     var modules = pipe.modules;
 
-    var modulesById = {};
+    var modulesById = {},
+        embeddedModulesById = {};
     modules.forEach(function (m) {
         // Index modules by Id
         modulesById[m.id] = m;
@@ -38,12 +40,25 @@ fetchPipe(pipeId, function (pipe) {
         // initialize wires list
         m.inputWires = [];
         m.outputWires = [];
+
+        if (m.type === "loop") {
+            var submodule = m.conf.embed.value;
+            embeddedModulesById[submodule.id] = submodule;
+            submodule.parentModuleId = m.id;
+        }
+
     });
 
     var wires = pipe.wires;
     wires.forEach(function (w) {
         modulesById[w.src.moduleid].outputWires.push(w);
-        modulesById[w.tgt.moduleid].inputWires.push(w);
+
+        if (modulesById[w.tgt.moduleid]) {
+            modulesById[w.tgt.moduleid].inputWires.push(w);
+        }
+        else if (embeddedModulesById[w.tgt.moduleid]) {
+            modulesById[embeddedModulesById[w.tgt.moduleid].parentModuleId].inputWires.push(w);
+        }
     });
 
 

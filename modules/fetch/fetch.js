@@ -13,14 +13,7 @@ var valueFor = function (val, input) {
 };
 
 
-exports.worker = function (task, config) {
-
-    var input = JSON.parse(task.config.input),
-        url = valueFor(input.URL, input);
-
-        // TODO: fetch must be able to get multiple URLs !!!!
-
-    console.log(url);
+var fetch_feed = function (url, cb) {
 
     request(url, function (error, response, body) {
 
@@ -52,19 +45,44 @@ exports.worker = function (task, config) {
                             result = result.slice(0, 3);
                         }*/
 
-                        task.respondCompleted({
+                        /*task.respondCompleted({
                             _OUTPUT: result
-                        });
+                        });*/
+                        cb(null, result);
                     });
                     parser.parseString(body);
                     return;
                 }
             }
 
-            task.respondCompleted(r);
+            //task.respondCompleted(r);
         }
     });
+};
 
+exports.worker = function (task, config) {
+
+    var input = JSON.parse(task.config.input);
+
+    // fetch must be able to get multiple URLs 
+    var urls = [];
+    if (Array.isArray(input.URL)) {
+        input.URL.forEach(function (u) {
+            urls.push(valueFor(u, input));
+        });
+    } else {
+        urls.push(valueFor(input.URL, input));
+    }
+
+    console.log(urls);
+
+    fetch_feed(urls[0], function (err, result) { // TODO: async
+
+        task.respondCompleted({
+            _OUTPUT: result
+        });
+
+    });
 
 };
 

@@ -13,7 +13,9 @@ var valueFor = function (val, input) {
 exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input),
-        url = valueFor(input.BASE, input) + '/' + valueFor(input.PATH, input),
+        base = valueFor(input.BASE, input),
+        url_path = valueFor(input.PATH, input),
+        url = base + ((base.length > 0 && base[base.length - 1] !== '/' && url_path.length > 0 && url_path[0] !== '/') ? '/' : '') + url_path,
         q = {};
 
     input.PARAM.forEach(function (p) {

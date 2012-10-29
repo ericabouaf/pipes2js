@@ -5,6 +5,8 @@ var valueFor = function (val, input) {
         value = val.value;
     } else if (val.hasOwnProperty("terminal")) {
         value = input[val.terminal];
+    } else if (val.hasOwnProperty("subkey")) {
+        value = input.item[val.subkey];
     }
     return value;
 };
