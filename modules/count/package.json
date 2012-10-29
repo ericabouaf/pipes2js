@@ -1,0 +1,6 @@
+{
+    "name" : "count",
+    "main" : "./count.js",
+    "version": "0.0.1",
+    "description": "count module"
+}

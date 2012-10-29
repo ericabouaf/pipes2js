@@ -1,0 +1,6 @@
+{
+    "name" : "simplemath",
+    "main" : "./simplemath.js",
+    "version": "0.0.1",
+    "description": "simplemath module"
+}
