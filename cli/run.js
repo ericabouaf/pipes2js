@@ -14,7 +14,7 @@ console.log("Running pipe: " + pipe);
 
 var deciderCode = fs.readFileSync(path.join(process.cwd(), 'pipes', pipe, pipe + '.js'), 'utf8');
 
-var run = require('./lib/engine').run;
+var run = require('../lib/engine').run;
 
 run({}, deciderCode, function (err, results, state) {
 
