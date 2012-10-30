@@ -1,17 +1,7 @@
 
 var request = require('request'),
-    xml2js = require('xml2js-expat');
-
-var valueFor = function (val, input) {
-    var value;
-    if (val.hasOwnProperty("value")) {
-        value = val.value;
-    } else if (val.hasOwnProperty("terminal")) {
-        value = input[val.terminal];
-    }
-    return value;
-};
-
+    xml2js = require('xml2js-expat'),
+    async = require('async');
 
 var fetch_feed = function (url, cb) {
 
@@ -37,17 +27,7 @@ var fetch_feed = function (url, cb) {
                 if (feed_content_types.indexOf(contentType) !== -1) {
                     var parser = new xml2js.Parser();
                     parser.addListener('end', function (r) {
-
                         var result = r.channel.item;
-
-                        // TODO: beurk
-                        /*if (JSON.stringify(result).length > 32768) {
-                            result = result.slice(0, 3);
-                        }*/
-
-                        /*task.respondCompleted({
-                            _OUTPUT: result
-                        });*/
                         cb(null, result);
                     });
                     parser.parseString(body);
@@ -55,7 +35,6 @@ var fetch_feed = function (url, cb) {
                 }
             }
 
-            //task.respondCompleted(r);
         }
     });
 };
@@ -68,20 +47,26 @@ exports.worker = function (task, config) {
     var urls = [];
     if (Array.isArray(input.URL)) {
         input.URL.forEach(function (u) {
-            urls.push(valueFor(u, input));
+            urls.push(u);
         });
     } else {
-        urls.push(valueFor(input.URL, input));
+        urls.push(input.URL);
     }
 
     console.log(urls);
 
-    fetch_feed(urls[0], function (err, result) { // TODO: async
+    var items = [];
+    async.forEachSeries(urls, function (url, cb) {
 
-        task.respondCompleted({
-            _OUTPUT: result
+        fetch_feed(url, function (err, result) {
+            items = items.concat(result);
+            cb(err, result);
         });
 
+    }, function () {
+        task.respondCompleted({
+            _OUTPUT: items
+        });
     });
 
 };

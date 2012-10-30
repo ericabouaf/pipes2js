@@ -1,40 +1,34 @@
 var async = require('async'),
     path = require('path');
 
-// Method to walk the submodule config to get the list of incoming wires
-var walk_wire_values = function (conf) {
-    var terminals = [], i, k;
-
+var walk_subkey_values = function (conf, item) {    
     if (Array.isArray(conf)) {
         for (i = 0; i < conf.length; i += 1) {
-            terminals = terminals.concat(walk_wire_values(conf[i]));
+            if(conf[i].hasOwnProperty('subkey')) {
+                conf[i] = item[conf[i].subkey];
+            } else {
+              walk_subkey_values(conf[i], item);
+            }
         }
-    } else {
+    } else if (typeof conf === 'object') {
         for (k in conf) {
             if (conf.hasOwnProperty(k)) {
-                if (k === "terminal") {
-                    terminals.push(conf[k]);
-                } else if (typeof conf[k] === "object") {
-                    terminals = terminals.concat(walk_wire_values(conf[k]));
+                if(conf[k].hasOwnProperty('subkey')) {
+                    conf[k] = item[conf[k].subkey];
+                } else {
+                    walk_subkey_values(conf[k], item);
                 }
             }
         }
     }
-    return terminals;
 };
 
 exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input);
-
-    var submodule = input.embed.value;
-
+    var submodule = input.embed;
     var activityType = submodule.type;
     var worker = require(path.join(process.cwd(), 'modules', activityType)).worker;
-
-    // Wires incoming to the submodule :
-    var terminals = walk_wire_values(submodule.conf);
-
 
     /*"emit_part": {
       "type": "text",
@@ -55,20 +49,13 @@ exports.worker = function (task, config) {
     */
 
     var submoduleJsonConf = JSON.stringify(submodule.conf);
-
     var loop_results = [];
 
     async.forEachSeries(input._INPUT, function (item, cb) {
 
         var submoduleInput = JSON.parse(submoduleJsonConf);
 
-        // Copy wires values into new config
-        terminals.forEach(function (t) {
-            submoduleInput[t] = input[t];
-        });
-
-        // add item values
-        submoduleInput.item = item;
+        walk_subkey_values(submoduleInput, item);
 
         worker({
             config: {
@@ -76,21 +63,17 @@ exports.worker = function (task, config) {
             },
 
             respondCompleted: function (results) {
-
                 loop_results.push(results._OUTPUT);
-                item[input.assign_to.value] = results._OUTPUT;
-
+                item[input.assign_to] = results._OUTPUT;
                 cb(null, results);
             }
         });
 
 
     }, function () {
-
         task.respondCompleted({
             _OUTPUT: input._INPUT // TODO: or return loop_results
         });
-
     });
 
 };
