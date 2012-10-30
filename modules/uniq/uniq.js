@@ -6,17 +6,16 @@ exports.worker = function (task, config) {
     var uniq_field = input.field.value;
 
     var results = [];
-    var itemsByValue = {};
+    var itemsByValue = {}, i;
 
-    for(var i = 0 ; i < input._INPUT.length; i++) {
+    for (i = 0; i < input._INPUT.length; i += 1) {
         var val = input._INPUT[i][uniq_field];
 
-        if(!itemsByValue[val]) {
+        if (!itemsByValue[val]) {
             input._INPUT[i]["y:repeatcount"] = 1;
             results.push(input._INPUT[i]);
             itemsByValue[val] = input._INPUT[i];
-        }
-        else {
+        } else {
             itemsByValue[val]["y:repeatcount"] += 1;
         }
     }

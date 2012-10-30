@@ -2,21 +2,20 @@ var async = require('async'),
     path = require('path');
 
 // Method to walk the submodule config to get the list of incoming wires
-function walk_wire_values(conf) {
-    var terminals = [];
+var walk_wire_values = function (conf) {
+    var terminals = [], i, k;
 
     if (Array.isArray(conf)) {
-        for(var i = 0; i < conf.length; i++) {
-            terminals = terminals.concat( walk_wire_values(conf[i]) );
+        for (i = 0; i < conf.length; i += 1) {
+            terminals = terminals.concat(walk_wire_values(conf[i]));
         }
     } else {
-        for(var k in conf) {
+        for (k in conf) {
             if (conf.hasOwnProperty(k)) {
                 if (k === "terminal") {
                     terminals.push(conf[k]);
-                }
-                else if (typeof conf[k] === "object") {
-                    terminals = terminals.concat( walk_wire_values(conf[k]) );
+                } else if (typeof conf[k] === "object") {
+                    terminals = terminals.concat(walk_wire_values(conf[k]));
                 }
             }
         }
@@ -59,12 +58,12 @@ exports.worker = function (task, config) {
 
     var loop_results = [];
 
-    async.forEachSeries(input._INPUT, function(item, cb) {
+    async.forEachSeries(input._INPUT, function (item, cb) {
 
         var submoduleInput = JSON.parse(submoduleJsonConf);
 
         // Copy wires values into new config
-        terminals.forEach(function(t) {
+        terminals.forEach(function (t) {
             submoduleInput[t] = input[t];
         });
 
@@ -76,7 +75,7 @@ exports.worker = function (task, config) {
                 input: JSON.stringify(submoduleInput)
             },
 
-            respondCompleted: function(results) {
+            respondCompleted: function (results) {
 
                 loop_results.push(results._OUTPUT);
                 item[input.assign_to.value] = results._OUTPUT;
@@ -86,7 +85,7 @@ exports.worker = function (task, config) {
         });
 
 
-    }, function() {
+    }, function () {
 
         task.respondCompleted({
             _OUTPUT: input._INPUT // TODO: or return loop_results

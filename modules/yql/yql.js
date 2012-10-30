@@ -4,10 +4,9 @@ var request = require('request'),
 
 var valueFor = function (val, input) {
     var value;
-    if(typeof val === "string") {
+    if (typeof val === "string") {
         value = val;
-    }
-    else if (val.hasOwnProperty("value")) {
+    } else if (val.hasOwnProperty("value")) {
         value = val.value;
     } else if (val.hasOwnProperty("terminal")) {
         value = input[val.terminal];
@@ -28,9 +27,7 @@ exports.worker = function (task, config) {
         env: valueFor(input.envURL, input)
     };
 
-    var url = "http://query.yahooapis.com/v1/public/yql?"+querystring.stringify(q);
-    
-    console.log(url);
+    var url = "http://query.yahooapis.com/v1/public/yql?" + querystring.stringify(q);
 
     request(url, function (error, response, body) {
 
@@ -41,7 +38,7 @@ exports.worker = function (task, config) {
             task.respondCompleted({
                 _OUTPUT: JSON.parse(body)
             });
-            
+
         }
     });
 

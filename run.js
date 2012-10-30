@@ -32,7 +32,7 @@ var decide = function (deciderCode, state) {
             if (!decisions) { decisions = []; }
         },
         completed: function (id) {
-            return !!state[id] && state[id].state == 'completed';
+            return !!state[id] && state[id].state === 'completed';
         },
         stop: function () {
         },
@@ -49,30 +49,30 @@ var decide = function (deciderCode, state) {
 
 
 
-var Task = function(id, cb) {
+var Task = function (id, cb) {
     this.id = id;
     this.cb = cb;
 };
 Task.prototype = {
-    respondCompleted: function(result) {
+    respondCompleted: function (result) {
         this.cb(this.id, result);
     }
 };
 
 
-var run = function(state, deciderCode, cb) {
+var run = function (state, deciderCode, cb) {
 
     var decisions = decide(deciderCode, state);
 
     if (!decisions) { return; }
 
-    var respondCompleted = function(id, result) {
+    var respondCompleted = function (id, result) {
         state[id].state = 'completed';
         state[id].results = result;
         run(state, deciderCode, cb);
     };
-
-    for(var i = 0 ; i < decisions.length ; i++) {
+    var i;
+    for (i = 0; i < decisions.length; i += 1) {
         var decision = decisions[i];
 
         state[decision.id] = {
@@ -88,11 +88,11 @@ var run = function(state, deciderCode, cb) {
         };
 
         var worker = require(path.join(process.cwd(), 'modules', activityType)).worker;
-        console.log("Running " + decision.id + " (" + activityType + ")")
+        console.log("Running " + decision.id + " (" + activityType + ")");
         worker(task);
 
-        if(decision.id === "_OUTPUT") {
-            cb(null, state["_OUTPUT"].results._OUTPUT, state);
+        if (decision.id === "_OUTPUT") {
+            cb(null, state._OUTPUT.results._OUTPUT, state);
         }
     }
 

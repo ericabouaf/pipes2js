@@ -22,12 +22,10 @@ exports.worker = function (task, config) {
     var result;
     if (op === 'modulo') {
         result = a % b;
-    }
-    else if (op === 'subtract') {
+    } else if (op === 'subtract') {
         result = a - b;
-    }
-    else {
-        throw "OP not known: "+op;
+    } else {
+        throw "OP not known: " + op;
     }
 
     task.respondCompleted({

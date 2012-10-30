@@ -55,8 +55,7 @@ fetchPipe(pipeId, function (pipe) {
 
         if (modulesById[w.tgt.moduleid]) {
             modulesById[w.tgt.moduleid].inputWires.push(w);
-        }
-        else if (embeddedModulesById[w.tgt.moduleid]) {
+        } else if (embeddedModulesById[w.tgt.moduleid]) {
             modulesById[embeddedModulesById[w.tgt.moduleid].parentModuleId].inputWires.push(w);
         }
     });

@@ -15,10 +15,13 @@ exports.worker = function (task, config) {
     var input = JSON.parse(task.config.input);
 
 
-    var item = {};
+    var item = {},
+        k;
 
-    for(var k in input.attrs) {
-        item[valueFor(input.attrs[k].key, input)] = valueFor(input.attrs[k].value, input);
+    for (k in input.attrs) {
+        if (input.attrs.hasOwnProperty(k)) {
+            item[valueFor(input.attrs[k].key, input)] = valueFor(input.attrs[k].value, input);
+        }
     }
 
     task.respondCompleted({
