@@ -1,0 +1,6 @@
+{
+    "name" : "regex",
+    "main" : "./regex.js",
+    "version": "0.0.1",
+    "description": "regex module"
+}

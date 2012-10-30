@@ -1,0 +1,6 @@
+{
+    "name" : "rename",
+    "main" : "./rename.js",
+    "version": "0.0.1",
+    "description": "rename module"
+}

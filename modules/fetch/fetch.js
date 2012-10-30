@@ -23,12 +23,17 @@ var fetch_feed = function (url, cb) {
                 }
 
                 // Parsing XML
-                var feed_content_types = ["text/xml", "application/rss+xml"];
+                var feed_content_types = ["text/xml", "application/rss+xml", "application/xml"];
                 if (feed_content_types.indexOf(contentType) !== -1) {
+                    console.log("parsing...");
                     var parser = new xml2js.Parser();
                     parser.addListener('end', function (r) {
-                        var result = r.channel.item;
+                        //console.log(r);
+                        var result = r.channel ? r.channel.item : r.entry;
                         cb(null, result);
+                    });
+                    parser.addListener('error', function (r) {
+                        console.log("Error parsing feed...");
                     });
                     parser.parseString(body);
                     return;

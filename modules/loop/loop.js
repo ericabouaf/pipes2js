@@ -1,20 +1,35 @@
 var async = require('async'),
     path = require('path');
 
-var walk_subkey_values = function (conf, item) {    
+var getItemSubkey = function (item, subkey) {
+
+    var destPath = subkey.split('.');
+    var src = item, i;
+
+    if (destPath.length > 1) {
+        for (i = 0; i < destPath.length - 1; i += 1) {
+            src = src[destPath[i]];
+        }
+    }
+
+    return src[destPath[destPath.length - 1]];
+};
+
+var walk_subkey_values = function (conf, item) {
+    var i, k;
     if (Array.isArray(conf)) {
         for (i = 0; i < conf.length; i += 1) {
-            if(conf[i].hasOwnProperty('subkey')) {
-                conf[i] = item[conf[i].subkey];
+            if (conf[i].hasOwnProperty('subkey')) {
+                conf[i] = getItemSubkey(item, conf[i].subkey);
             } else {
-              walk_subkey_values(conf[i], item);
+                walk_subkey_values(conf[i], item);
             }
         }
     } else if (typeof conf === 'object') {
         for (k in conf) {
             if (conf.hasOwnProperty(k)) {
-                if(conf[k].hasOwnProperty('subkey')) {
-                    conf[k] = item[conf[k].subkey];
+                if (conf[k].hasOwnProperty('subkey')) {
+                    conf[k] = getItemSubkey(item, conf[k].subkey);
                 } else {
                     walk_subkey_values(conf[k], item);
                 }
