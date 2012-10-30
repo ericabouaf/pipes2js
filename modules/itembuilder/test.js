@@ -14,14 +14,8 @@ vows.describe('Test itembuilder module').addBatch({
                     input: JSON.stringify({
                         attrs: [
                             {
-                                key: {
-                                    type: 'text',
-                                    value: 'foo'
-                                },
-                                value: {
-                                    type: 'text',
-                                    value: 'bar'
-                                }
+                                key: 'foo',
+                                value: 'bar'
                             }
                         ]
                     })

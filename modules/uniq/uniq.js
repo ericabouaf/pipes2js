@@ -3,7 +3,7 @@ exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input);
 
-    var uniq_field = input.field.value;
+    var uniq_field = input.field;
 
     var results = [];
     var itemsByValue = {}, i;

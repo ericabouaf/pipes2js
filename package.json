@@ -11,6 +11,6 @@
         "vows": "0.6.4"
     },
     "scripts": {
-        "test": "vows --spec modules/*/test.js"
+        "test": "vows --spec modules/*/test.js tests/*"
     }
 }
