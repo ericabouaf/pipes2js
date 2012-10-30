@@ -1,0 +1,6 @@
+{
+    "name" : "reverse",
+    "main" : "./reverse.js",
+    "version": "0.0.1",
+    "description": "reverse module"
+}

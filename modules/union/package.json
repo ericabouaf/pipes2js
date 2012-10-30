@@ -1,0 +1,6 @@
+{
+    "name" : "union",
+    "main" : "./union.js",
+    "version": "0.0.1",
+    "description": "union module"
+}

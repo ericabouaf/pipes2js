@@ -1,0 +1,6 @@
+{
+    "name" : "uniq",
+    "main" : "./uniq.js",
+    "version": "0.0.1",
+    "description": "uniq module"
+}
