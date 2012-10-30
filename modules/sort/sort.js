@@ -1,5 +1,5 @@
 
-var apply_rule = function (item, rule) {
+/*var apply_rule = function (item, rule) {
 
     var destPath = rule.field.split('.');
     var src = item, i;
@@ -16,7 +16,7 @@ var apply_rule = function (item, rule) {
         src[lastKey] = src[lastKey].replace(new RegExp(rule.match), rule.replace);
     }
 
-};
+};*/
 
 exports.worker = function (task, config) {
 
@@ -26,11 +26,12 @@ exports.worker = function (task, config) {
         return;
     }
 
-    input._INPUT.forEach(function (item) {
+    // TODO
+    /*input._INPUT.forEach(function (item) {
         input.RULE.forEach(function (rule) {
             apply_rule(item, rule);
         });
-    });
+    });*/
 
 
     task.respondCompleted({

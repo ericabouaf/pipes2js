@@ -40,6 +40,9 @@ var fetch_feed = function (url, cb) {
                 }
             }
 
+        } else {
+            // TODO: we should indicate errors in the response
+            cb(null, []);
         }
     });
 };

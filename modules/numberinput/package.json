@@ -1,0 +1,6 @@
+{
+    "name" : "numberinput",
+    "main" : "./numberinput.js",
+    "version": "0.0.1",
+    "description": "numberinput module"
+}

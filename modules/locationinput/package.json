@@ -1,0 +1,9 @@
+{
+    "name" : "locationinput",
+    "main" : "./locationinput.js",
+    "version": "0.0.1",
+    "description": "locationinput module",
+    "dependencies": {
+        "request": "2.11.4"
+    }
+}

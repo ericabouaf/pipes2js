@@ -1,20 +1,25 @@
 
 var apply_rule = function (item, rule) {
 
-    if (rule.op === 'copy') {
-        var destPath = rule.newval.split('.');
-        var val = item[rule.field];
+    var destPath = rule.newval.split('.');
+    var val = item[rule.field];
 
-        var dest = item, i;
-        if (destPath.length > 1) {
-            for (i = 0; i < destPath.length - 1; i += 1) {
-                if (!dest[destPath[i]]) {
-                    dest[destPath[i]] = {};
-                }
-                dest = dest[destPath[i]];
+    var dest = item, i;
+    if (destPath.length > 1) {
+        for (i = 0; i < destPath.length - 1; i += 1) {
+            if (!dest[destPath[i]]) {
+                dest[destPath[i]] = {};
             }
+            dest = dest[destPath[i]];
         }
-        dest[destPath[destPath.length - 1]] = val;
+    }
+
+    dest[destPath[destPath.length - 1]] = val;
+
+    if (rule.op === 'copy') {
+        //dest[destPath[destPath.length - 1]] = val;
+    } else if (rule.op === 'rename') {
+        delete dest[rule.field];
     } else {
         throw 'unknown op ' + rule.op;
     }

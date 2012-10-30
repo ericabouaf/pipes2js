@@ -1,0 +1,6 @@
+{
+    "name" : "privateinput",
+    "main" : "./privateinput.js",
+    "version": "0.0.1",
+    "description": "privateinput module"
+}
