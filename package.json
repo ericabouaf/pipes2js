@@ -1,7 +1,13 @@
 {
     "name" : "aws-swf-pipes-import",
     "version": "0.0.1",
-    "description": "Import a Yahoo! Pipes into the aws-swf format",
+    "description": "Compile Yahoo! Pipes to Javascript",
+    "author": "Eric Abouaf <eric.abouaf@gmail.com>",
+    "preferGlobal": "true",
+    "repository": {
+        "type":"git",
+        "url":"http://github.com/neyric/pipes2js.git"
+    },
     "dependencies": {
         "async": "0.1.22",
         "xml2js-expat": "0.2.2",
@@ -12,5 +18,11 @@
     },
     "scripts": {
         "test": "vows --spec modules/*/test.js tests/*"
-    }
+    },
+    "licenses" : [
+        {
+            "type" : "MIT",
+            "url" : "https://raw.github.com/neyric/pipes2js/master/LICENSE.txt"
+        }
+    ]
 }

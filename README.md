@@ -16,7 +16,7 @@ This has two advantages :
 
 ## More
 
-[Running on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-SWF)
+[Running imported pipes on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-SWF)
 
 [Current module implementations](https://github.com/neyric/pipes2js/wiki/Yahoo-Pipes-modules)
 
@@ -39,3 +39,7 @@ will perform :
  [![build status](https://secure.travis-ci.org/neyric/pipes2js.png)](http://travis-ci.org/neyric/pipes2js)
 
  
+## Credits
+
+Inspired by [pipe2py](https://github.com/ggaughan/pipe2py)
+
