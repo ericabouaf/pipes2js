@@ -16,7 +16,7 @@ This has two advantages :
 
 ## More
 
-[Running on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-(SWF))
+[Running on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-SWF)
 
 [Current module implementations](https://github.com/neyric/pipes2js/wiki/Yahoo-Pipes-modules)
 
