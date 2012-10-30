@@ -1,57 +1,41 @@
-# AWS-SWF Pipes import
+# pipes2js
 
-WARNING: EXPERIMENTAL !!
-
-Transform Yahoo! pipes into Amazon Simple Workflows (SWF)
-
-## Usage
-
-First we need to register a domain :
-
-````sh
-$ swf-register -k domain aws-swf-pipes-import
-````
-
-Finally, we will register all activity types for pipes :
-
-````sh
-$ cd modules
-$ swf-register
-````
-
-### Step1: register all components
-
-Import the pipe into a workflow :
-
-````sh
-$ node import.js 59738c010bb144a36d54a1697aab7d0d
-````
-
-Then, register the workflow :
-
-````sh
-$ swf-register -k workflow 59738c010bb144a36d54a1697aab7d0d
-````
+Compile Yahoo! Pipes to Javascript (Node.js)
 
 
-### Step2: run the decider, and the activity poller
+## Design
 
-Launch a decider Poller:
+This tool lets you import Yahoo! Pipes into a custom script written in javascript, which controls the execution logic of the workflow.
 
-````sh
-$ cd pipes/
-$ swf-decider
-````
+This has two advantages :
 
-Launch an Activity Poller:
+ * The resulting workflow can be executed on Amazon SimpleWorkflow (SWF)
+ * The modules developed for this experiment can be used for other Amazon SWF projects
 
-````sh
-$ cd modules/
-$ swf-activity
-````
 
-### Step3: Start the workflow !
 
-````sh
-$ swf-start 59738c010bb144a36d54a1697aab7d0d
-````
+## More
+
+[Running on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-(SWF))
+
+[Current module implementations](https://github.com/neyric/pipes2js/wiki/Yahoo-Pipes-modules)
+
+
+## Tests
+
+
+Run tests :
+
+
+    npm test
+
+
+will perform :
+
+
+    vows --spec modules/*/test.js tests/*
+
+
+ [![build status](https://secure.travis-ci.org/neyric/pipes2js.png)](http://travis-ci.org/neyric/pipes2js)
+
+ 
