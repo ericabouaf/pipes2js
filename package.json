@@ -3,6 +3,8 @@
     "version": "0.0.1",
     "description": "Import a Yahoo! Pipes into the aws-swf format",
     "dependencies": {
+        "async": "0.1.22",
+        "xml2js-expat": "0.2.2",
         "request": "2.11.4"
     }
 }
