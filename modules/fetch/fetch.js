@@ -16,12 +16,6 @@ var fetch_feed = function (url, cb) {
 
                 console.log("contentType = " + contentType);
 
-                // Parsing JSON
-                var json_content_types = ["application/json", "text/javascript", "application/javascript"];
-                if (json_content_types.indexOf(contentType) !== -1) {
-                    r = JSON.parse(body);
-                }
-
                 // Parsing XML
                 var feed_content_types = ["text/xml", "application/rss+xml", "application/xml"];
                 if (feed_content_types.indexOf(contentType) !== -1) {
@@ -47,6 +41,24 @@ var fetch_feed = function (url, cb) {
     });
 };
 
+var fetch_feeds = function (urls, cb) {
+
+    var items = [];
+    async.forEachSeries(urls, function (url, cb) {
+
+        fetch_feed(url, function (err, result) {
+            items = items.concat(result);
+            cb(err, result);
+        });
+
+    }, function () {
+        cb(null, items);
+    });
+
+};
+
+exports.fetch_feeds = fetch_feeds;
+
 exports.worker = function (task, config) {
 
     var input = JSON.parse(task.config.input);
@@ -63,15 +75,7 @@ exports.worker = function (task, config) {
 
     console.log(urls);
 
-    var items = [];
-    async.forEachSeries(urls, function (url, cb) {
-
-        fetch_feed(url, function (err, result) {
-            items = items.concat(result);
-            cb(err, result);
-        });
-
-    }, function () {
+    fetch_feeds(urls, function (err, items) {
         task.respondCompleted({
             _OUTPUT: items
         });

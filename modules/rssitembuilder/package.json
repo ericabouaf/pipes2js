@@ -1,0 +1,6 @@
+{
+    "name" : "rssitembuilder",
+    "main" : "./rssitembuilder.js",
+    "version": "0.0.1",
+    "description": "rssitembuilder module"
+}
