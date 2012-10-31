@@ -1,0 +1,6 @@
+{
+    "name" : "stringtokenizer",
+    "main" : "./stringtokenizer.js",
+    "version": "0.0.1",
+    "description": "stringtokenizer module"
+}
