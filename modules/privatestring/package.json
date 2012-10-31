@@ -1,0 +1,6 @@
+{
+    "name" : "privatestring",
+    "main" : "./privatestring.js",
+    "version": "0.0.1",
+    "description": "privatestring module"
+}
