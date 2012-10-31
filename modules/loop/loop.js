@@ -72,6 +72,12 @@ exports.worker = function (task, config) {
 
         walk_subkey_values(submoduleInput, item);
 
+        // Handling with attribute
+        console.log("TODO, with:", input.with);
+        if (input.with) {
+          submoduleInput._INPUT = item[input.with];
+        }
+
         worker({
             config: {
                 input: JSON.stringify(submoduleInput)
