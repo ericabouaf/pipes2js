@@ -1,0 +1,9 @@
+{
+    "name" : "webservice",
+    "main" : "./webservice.js",
+    "version": "0.0.1",
+    "description": "webservice module",
+    "dependencies": {
+        "request": "2.11.4"
+    }
+}
