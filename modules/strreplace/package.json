@@ -1,0 +1,6 @@
+{
+    "name" : "strreplace",
+    "main" : "./strreplace.js",
+    "version": "0.0.1",
+    "description": "strreplace module"
+}
