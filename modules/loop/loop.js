@@ -73,9 +73,11 @@ exports.worker = function (task, config) {
         walk_subkey_values(submoduleInput, item);
 
         // Handling with attribute
-        console.log("TODO, with:", input.with);
+        //console.log("TODO, with:", input.with);
         if (input.with) {
-          submoduleInput._INPUT = item[input.with];
+            submoduleInput._INPUT = item[input.with];
+        } else {
+            submoduleInput._INPUT = item;
         }
 
         worker({
@@ -84,7 +86,13 @@ exports.worker = function (task, config) {
             },
 
             respondCompleted: function (results) {
-                loop_results.push(results._OUTPUT);
+
+                if (Array.isArray(results._OUTPUT)) {
+                    loop_results = loop_results.concat(results._OUTPUT);
+                } else {
+                    loop_results.push(results._OUTPUT);
+                }
+
                 item[input.assign_to] = results._OUTPUT;
                 cb(null, results);
             }
@@ -93,7 +101,7 @@ exports.worker = function (task, config) {
 
     }, function () {
         task.respondCompleted({
-            _OUTPUT: input._INPUT // TODO: or return loop_results
+            _OUTPUT: (input.mode === 'EMIT') ? loop_results : input._INPUT
         });
     });
 

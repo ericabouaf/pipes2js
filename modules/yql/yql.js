@@ -22,8 +22,20 @@ exports.worker = function (task, config) {
 
         if (!error && response.statusCode === 200) {
 
+            var results = JSON.parse(body);
+            if (input.raw === 'results') {
+                results = results.query.results;
+                results = results[Object.keys(results)[0]];
+                results = results.map(function (i) {
+                    if (typeof i === 'object' && i.hasOwnProperty('content')) {
+                        return {content: i.content};
+                    }
+                    return {content: i};
+                });
+            }
+
             task.respondCompleted({
-                _OUTPUT: JSON.parse(body)
+                _OUTPUT: results
             });
 
         }
