@@ -1,0 +1,6 @@
+{
+    "name" : "tail",
+    "main" : "./tail.js",
+    "version": "0.0.1",
+    "description": "tail module"
+}
