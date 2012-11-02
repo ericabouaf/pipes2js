@@ -1,5 +1,5 @@
 {
-    "name" : "aws-swf-pipes-import",
+    "name" : "pipes2js",
     "version": "0.0.1",
     "description": "Compile Yahoo! Pipes to Javascript",
     "author": "Eric Abouaf <eric.abouaf@gmail.com>",
@@ -13,7 +13,8 @@
         "xml2js-expat": "0.2.2",
         "request": "2.11.4",
         "htmlparser": "1.7.6",
-        "strftime": "0.4.7"
+        "strftime": "0.4.7",
+        "jsdom": "0.2.19"
     },
     "devDependencies": {
         "vows": "0.6.4"

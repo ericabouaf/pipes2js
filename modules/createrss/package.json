@@ -1,0 +1,6 @@
+{
+    "name" : "createrss",
+    "main" : "./createrss.js",
+    "version": "0.0.1",
+    "description": "createrss module"
+}

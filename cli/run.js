@@ -20,7 +20,5 @@ run({}, deciderCode, function (err, results, state) {
 
     console.log(JSON.stringify(results, null, 3));
 
-    //console.log(JSON.stringify(state));
-
 });
 
