@@ -4,9 +4,14 @@
     "description": "Compile Yahoo! Pipes to Javascript",
     "author": "Eric Abouaf <eric.abouaf@gmail.com>",
     "preferGlobal": "true",
+    "main" : "index.js",
+    "directories" : { "lib" : "./lib" },
     "repository": {
         "type":"git",
         "url":"http://github.com/neyric/pipes2js.git"
+    },
+    "bin": {
+        "pipes2js": "./cli/pipes2js.js"
     },
     "dependencies": {
         "async": "0.1.22",
