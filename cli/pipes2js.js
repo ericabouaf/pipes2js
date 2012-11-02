@@ -1,8 +1,15 @@
+#!/usr/bin/env node
 
-var pipe2js = require('../lib/index');
+var path = require('path'),
+    pipe2js = require(path.join(__dirname, '..', 'index'));
+
+function usage() {
+    console.log("Usage: pipes2js (pipeId)");
+}
 
 if (process.argv.length < 3) {
-    throw "Please provide a pipeId !";
+    usage();
+    process.exit(0);
 }
 var pipeId = process.argv[2];
 

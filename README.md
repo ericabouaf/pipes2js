@@ -5,24 +5,43 @@ Compile Yahoo! Pipes to Javascript (Node.js)
 
 ## Design
 
-This tool lets you import Yahoo! Pipes into a custom script written in javascript, which controls the execution logic of the workflow.
+This tool lets you import Yahoo! Pipes and run them on any machine with Node.js.
 
-This has two advantages :
+The pipe is converted to a javascript file, called *decider.js*, which controls the execution logic of the workflow.
 
- * The resulting workflow can be executed on Amazon SimpleWorkflow (SWF)
- * The modules developed for this experiment can be used for other Amazon SWF projects
+Each Yahoo module is coded as a separate Javascript module.
 
+ * The pipe can be executed localy through a simple run engine (called by the generated run.js)
+ * or executed on Amazon SimpleWorkflow (SWF)
+ * The rsulting modules can be used for other Amazon SWF projects through the [aws-swf library](https://github.com/neyric/aws-swf)
 
+## Installation
+
+    $ [sudo] npm install -g pipes2js
+
+## Usage
+
+Import the pipe :
+
+    $ pipes2js xOE_1Z8C3RGmkQrul7okhQ
+
+This will create a pipes/xOE_1Z8C3RGmkQrul7okhQ/ directory, which contains an npm package.
+The resulting package depends on the pipes2js package. Let's install it :
+
+    $ cd pipes/xOE_1Z8C3RGmkQrul7okhQ/
+    $ npm install .
+
+You can then run it :
+
+    $ node run.js
 
 ## More
 
-[Running imported pipes on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-SWF)
-
 [Current module implementations](https://github.com/neyric/pipes2js/wiki/Yahoo-Pipes-modules)
 
+[EXPERIMENTAL: Running imported pipes on Amazon SimpleWorkflow (SWF)](https://github.com/neyric/pipes2js/wiki/Running-on-Amazon-SimpleWorkflow-SWF)
 
 ## Tests
-
 
 Run tests :
 
