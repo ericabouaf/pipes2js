@@ -1,0 +1,9 @@
+{
+    "name" : "datebuilder",
+    "main" : "./datebuilder.js",
+    "version": "0.0.1",
+    "description": "datebuilder module",
+    "dependencies": {
+        "strftime": "0.4.7"
+    }
+}

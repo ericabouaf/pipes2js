@@ -12,7 +12,8 @@
         "async": "0.1.22",
         "xml2js-expat": "0.2.2",
         "request": "2.11.4",
-        "htmlparser": "1.7.6"
+        "htmlparser": "1.7.6",
+        "strftime": "0.4.7"
     },
     "devDependencies": {
         "vows": "0.6.4"

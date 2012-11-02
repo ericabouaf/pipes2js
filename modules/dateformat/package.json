@@ -1,0 +1,9 @@
+{
+    "name" : "dateformat",
+    "main" : "./dateformat.js",
+    "version": "0.0.1",
+    "description": "dateformat module",
+    "dependencies": {
+        "strftime": "0.4.7"
+    }
+}
