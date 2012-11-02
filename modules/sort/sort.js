@@ -1,41 +1,28 @@
-
-/*var apply_rule = function (item, rule) {
-
-    var destPath = rule.field.split('.');
-    var src = item, i;
-
-    if (destPath.length > 1) {
-        for (i = 0; i < destPath.length - 1; i += 1) {
-            src = src[destPath[i]];
-        }
-    }
-
-    var lastKey = destPath[destPath.length - 1];
-
-    if (rule.replace) {
-        src[lastKey] = src[lastKey].replace(new RegExp(rule.match), rule.replace);
-    }
-
-};*/
+var subkey = require('../../lib/subkey').subkey;
 
 exports.worker = function (task, config) {
 
-    var input = JSON.parse(task.config.input);
+    var input = JSON.parse(task.config.input),
+        results = input._INPUT;
 
-    if (!Array.isArray(input._INPUT)) {
-        return;
-    }
+    //input.KEY.forEach(function (sortKey) {
 
-    // TODO
-    /*input._INPUT.forEach(function (item) {
-        input.RULE.forEach(function (rule) {
-            apply_rule(item, rule);
+    // TODO: currently handling only first sort field
+
+    var sortKey = input.KEY[0];
+
+        var sort_order = (sortKey.dir === 'ASC') ? -1 : 1;
+        results = results.sort(function (a, b) {
+            var valA = subkey(a, sortKey.field),
+                valB = subkey(b, sortKey.field);
+            return (valA < valB ? 1 : -1) * sort_order;
         });
-    });*/
+
+    //});
 
 
     task.respondCompleted({
-        _OUTPUT: input._INPUT
+        _OUTPUT: results
     });
 
 };

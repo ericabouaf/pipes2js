@@ -59,8 +59,7 @@ exports.worker = function (task, config) {
 
         walk_subkey_values(submoduleInput, item);
 
-        // Handling with attribute
-        //console.log("TODO, with:", input.with);
+        // Handling "with" attribute
         if (input.with) {
             submoduleInput._INPUT = item[input.with];
         } else {
