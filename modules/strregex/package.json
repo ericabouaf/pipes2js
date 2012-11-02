@@ -1,0 +1,6 @@
+{
+    "name" : "strregex",
+    "main" : "./strregex.js",
+    "version": "0.0.1",
+    "description": "strregex module"
+}

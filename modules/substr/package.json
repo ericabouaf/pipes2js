@@ -1,0 +1,6 @@
+{
+    "name" : "substr",
+    "main" : "./substr.js",
+    "version": "0.0.1",
+    "description": "substr module"
+}
