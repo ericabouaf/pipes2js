@@ -1,7 +1,7 @@
 var vows = require('vows'),
     assert = require('assert');
 
-var pipe2js = require('../lib/pipe2js');
+var pipe2js = require('../index');
 
 vows.describe('Test conf2input method').addBatch({
 
